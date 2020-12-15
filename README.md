@@ -1,6 +1,6 @@
 # provolONE
 
-## Para executar:
+## Para executar (lembrar de rodar chmod +x run.sh antes):
 ```
 ./run.sh
 ```
