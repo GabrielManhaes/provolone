@@ -10,7 +10,7 @@
 %}
 
 %union {char *id;}
-%token ENTRADA SAIDA FIM ENQUANTO FACA INC DEC ZERA
+%token ENTRADA SAIDA FIM ENQUANTO FACA INC DEC ZERA PRINT DOBRA
 %token <id> ID NUM
 %type <id> cmd cmds varlist id
 
@@ -69,8 +69,10 @@ cmd:
     strcpy(result, "while true do\n");
     strcat(result, "if ");
     strcat(result, $2);
-    strcat(result, " == 0 then break end\n");
+    strcat(result, " == 0 then break\n");
+    strcat(result, "else\n");
     strcat(result, $4);
+    strcat(result, "end\n");  
     strcat(result, "end\n");
     $$ = result;
   }
@@ -110,6 +112,21 @@ cmd:
     char* result = malloc(strlen($3) + 6);
     strcpy(result, $3);
     strcat(result, " = 0\n");
+    $$ = result;
+  }
+  | PRINT '(' ID ')' {
+    char* result = malloc(strlen($3) + 6);
+    strcpy(result, "print(");
+    strcat(result, $3);
+    strcat(result, ")\n");
+    $$ = result;
+  }
+  | DOBRA '(' ID ')' {
+    char* result = malloc(strlen($3) + 6);
+    strcpy(result, $3);
+    strcat(result, " = 2 * ");
+    strcat(result, $3);
+    strcat(result, "\n");
     $$ = result;
   }
 ;

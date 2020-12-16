@@ -15,7 +15,7 @@
 %}
 
 %union {int num; char *id;}
-%token <id> ENTRADA SAIDA FIM ENQUANTO FACA INC ZERA DEC VEZES SE ENTAO ID NUM
+%token <id> ENTRADA SAIDA FIM ENQUANTO FACA INC ZERA DEC VEZES SE ENTAO ID NUM DOBRA PRINT
 %type <id> cmd cmds varlist
 
 %%
@@ -28,13 +28,13 @@ program:
     		char* code = malloc(strlen($1) + strlen($2) +strlen($3) +strlen($4) + strlen($5) + strlen($6) + 18);
     		strcpy(code, $1); strcat(code, " "); strcat(code, $2); strcat(code, " ");  //ENTRADA VARLIST (X, Y)
 				strcat(code, "BOOL1 COUNTER ");
-        strcat(code, $3); strcat(code, " "); strcat(code, $4); strcat(code, "\n"); //SAIDA Z
+
+	        strcat(code, $3); strcat(code, " "); strcat(code, $4); strcat(code, "\n"); //SAIDA Z
     		strcat(code, $5); //cmds
-        strcat(code, $6); //FIM
-        strcat(code, "\n");
+	        strcat(code, $6); //FIM
     		fprintf(saida, "%s", code);
+	    printf("EXTENDIDO GERADO");
     		fclose(saida);
-	      printf("EXTENDIDO GERADO"); 
     		exit(0);
   }
 ;
@@ -112,7 +112,19 @@ cmd:
     char* cmd = malloc(strlen($1) + strlen($3) + 5); strcpy(cmd, $1); strcat(cmd, "(");
     strcat(cmd, $3); strcat(cmd, ")\n"); 
     $$ = cmd;
-  }
+  	}
+	| DOBRA '(' ID ')' 
+	{
+	    char* cmd = malloc(strlen($1) + strlen($3) + 5); strcpy(cmd, $1); strcat(cmd, "(");
+	    strcat(cmd, $3); strcat(cmd, ")\n"); 
+	    $$ = cmd;
+	}
+	| PRINT '(' ID ')' 
+	{
+	    char* cmd = malloc(strlen($1) + strlen($3) + 5); strcpy(cmd, $1); strcat(cmd, "(");
+	    strcat(cmd, $3); strcat(cmd, ")\n"); 
+	    $$ = cmd;
+	}
 ;
 
 %%

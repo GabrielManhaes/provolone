@@ -19,6 +19,8 @@ FACA        { return (FACA); }
 INC         { return (INC); }
 DEC         { return (DEC); }
 ZERA        { return (ZERA); }
+PRINT       { return (PRINT); }
+DOBRA       { return (DOBRA); }
 [=()]       { return yytext[0]; }
 {var}       { yylval.id=strdup(yytext); return (ID); }
 {number}    { yylval.id=strdup(yytext); return (NUM); }
